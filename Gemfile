@@ -44,6 +44,8 @@ gem 'bootsnap', require: false
 
 gem 'interactor', '~> 3.0'
 
+gem 'httparty', '~> 0.21.0'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -57,7 +59,10 @@ end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem 'rspec', '~> 3.12'
   gem 'web-console'
+
+  gem 'rspec-rails', '~> 6.0.0'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -73,6 +78,4 @@ group :test do
   gem 'webdrivers'
 end
 
-gem "httparty", "~> 0.21.0"
-
-gem "rspec", "~> 3.12"
+gem "vcr", "~> 6.2"
