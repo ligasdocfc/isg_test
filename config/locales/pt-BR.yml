@@ -1,3 +1,3 @@
 pt-BR:
   errors:
-    pokemon_not_found: "Pokemon não encontrado"
+    pokemon_error: "Erro ao encontrar habilidades do Pokemon"
