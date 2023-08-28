@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  get 'pokemons/:name', to: 'pokemons#index'
+  get 'api/pokemons/:name', to: 'api/pokemons#index'
 end

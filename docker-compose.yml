@@ -1,0 +1,77 @@
+version: "3.4"
+
+x-rails-shared-config:
+  &rails-shared-config
+  tmpfs:
+    - /tmp
+  stdin_open: true
+  tty: true
+  build:
+    context: ./docker/base
+  env_file:
+    - ./docker/postgres/.env
+    - .env
+  environment:
+    - POSTGRES_HOST=postgres
+    - REDIS_URL=redis://redis:6379/
+    - BOOTSNAP_CACHE_DIR=/usr/local/bundle/_bootsnap
+    - HISTFILE=/root/hist/.bash_history
+    - IRB_HISTFILE=/root/hist/.irb_history
+    - PSQL_HISTFILE=/root/hist/.psql_history
+    - EDITOR=v:qi
+    - RAILS_MASTER_KEY=a4d737424d0a9e71bd8ef5521b8dd6d4
+  volumes:
+    - .:/app:cached
+    - rails_cache:/app/tmp/cache
+    - bundle:/usr/local/bundle
+    - history:/root/hist
+  depends_on:
+    - postgres
+  entrypoint: ./docker/rails/entrypoint.sh
+  networks:
+    - pokemon_network
+
+services:
+  app:
+    <<: *rails-shared-config
+    command: rails s -b 0.0.0.0
+    ports:
+      - 3000:3000
+
+  postgres:
+    image: postgres:15
+    volumes:
+      - .psqlrc:/root/.psqlrc:ro
+      - postgres:/var/lib/postgresql/data
+    env_file:
+      - ./docker/postgres/.env
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: pg_isready -U $${POSTGRES_USER} -h $${POSTGRES_HOST}
+      interval: 5s
+    networks:
+      - pokemon_network
+
+  localstack:
+    image: localstack/localstack:0.14.5
+    environment:
+      - SERVICES=s3
+      - AWS_ACCESS_KEY_ID=LOCAL_ACCESS_KEY_TOKEN
+      - AWS_SECRET_ACCESS_KEY=LOCAL_SECRET_ACCESS_KEY_TOKEN
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_DEFAULT_OUTPUT=json
+      - DATA_DIR=${LOCALSTACK_DATA_DIR:-/tmp/localstack/data}
+      - PERSISTENCE=1
+    ports:
+      - "4566:4566" # s3
+    volumes:
+      - ./.localstack/data:/tmp/localstack/data
+      - ./.localstack/bootstrap:/opt/bootstrap/
+volumes:
+  postgres:
+  bundle:
+  rails_cache:
+  history:
+networks:
+  pokemon_network:
