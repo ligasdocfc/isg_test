@@ -8,10 +8,12 @@ RSpec.describe FetchPokemonSkillsInteractor do
       let(:name) { 'pikachu' }
 
       it 'success' do
-        result = described_class.call(name:)
+        VCR.use_cassette('fetch_pokemons_success') do
+          result = described_class.call(name:)
 
-        expect(result).to be_success
-        expect(result[:message]).to eq(%w[lightning-rod static])
+          expect(result).to be_success
+          expect(result[:message]).to eq(%w[lightning-rod static])
+        end
       end
     end
 
@@ -19,10 +21,12 @@ RSpec.describe FetchPokemonSkillsInteractor do
       let(:name) { 'picachu' }
 
       it 'failure' do
-        result = described_class.call(name:)
+        VCR.use_cassette('fetch_pokemons_failure') do
+          result = described_class.call(name:)
 
-        expect(result).to be_failure
-        expect(result[:message]).to eq(I18n.t('errors.pokemon_error'))
+          expect(result).to be_failure
+          expect(result[:message]).to eq(I18n.t('errors.pokemon_error'))
+        end
       end
     end
   end
