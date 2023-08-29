@@ -12,7 +12,7 @@ class FetchPokemonAbilitiesInteractor
   private
 
   def pokemon
-    @pokemon ||= Integrations::PokeApi::Client.new(name).fetch_pokemon
+    @pokemon ||= Integrations::PokeApi::Client.new(name.downcase).fetch_pokemon
   end
 
   def fetch_pokemon_abilities

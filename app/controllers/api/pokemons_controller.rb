@@ -3,7 +3,7 @@
 module Api
   class PokemonsController < ApplicationController
     def index
-      pokemon_abilities = FetchPokemonAbilitiesInteractor.call(name: params[:name].downcase)
+      pokemon_abilities = FetchPokemonAbilitiesInteractor.call(name: params[:name])
 
       if pokemon_abilities.success?
         render json: { abilities: pokemon_abilities[:message] }.to_json, status: :ok
