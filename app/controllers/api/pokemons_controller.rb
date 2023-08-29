@@ -3,12 +3,12 @@
 module Api
   class PokemonsController < ApplicationController
     def index
-      pokemon_skills = FetchPokemonSkillsInteractor.call(name: params[:name].downcase)
+      pokemon_abilities = FetchPokemonAbilitiesInteractor.call(name: params[:name].downcase)
 
-      if pokemon_skills.success?
-        render json: { skills: pokemon_skills[:message] }.to_json, status: :ok
+      if pokemon_abilities.success?
+        render json: { abilities: pokemon_abilities[:message] }.to_json, status: :ok
       else
-        render json: errors_serializer(pokemon_skills[:message]),
+        render json: errors_serializer(pokemon_abilities[:message]),
                status: :unprocessable_entity
       end
     end

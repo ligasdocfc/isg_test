@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class FetchPokemonSkillsInteractor
+class FetchPokemonAbilitiesInteractor
   include Mixins::PokemonListInteractor
 
   attributes :name
 
   def call
-    fetch_pokemon_skills
+    fetch_pokemon_abilities
   end
 
   private
@@ -15,14 +15,14 @@ class FetchPokemonSkillsInteractor
     @pokemon ||= Integrations::PokeApi::Client.new(name).fetch_pokemon
   end
 
-  def fetch_pokemon_skills
+  def fetch_pokemon_abilities
     context.fail!(message: I18n.t('errors.pokemon_error')) unless pokemon.success?
 
-    pokemon_skills_name = []
-    pokemon['abilities'].each do |pokemon_skill|
-      pokemon_skills_name << pokemon_skill['ability']['name']
+    pokemon_abilities_name = []
+    pokemon['abilities'].each do |pokemon_ability|
+      pokemon_abilities_name << pokemon_ability['ability']['name']
     end
 
-    context.message = pokemon_skills_name.sort
+    context.message = pokemon_abilities_name.sort
   end
 end

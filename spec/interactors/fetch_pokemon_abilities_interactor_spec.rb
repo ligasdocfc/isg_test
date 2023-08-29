@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe FetchPokemonSkillsInteractor do
+RSpec.describe FetchPokemonAbilitiesInteractor do
   describe '#call' do
-    context 'with valid params' do
+    context 'when pokemon exists' do
       let(:name) { 'pikachu' }
 
       it 'success' do
@@ -17,7 +17,7 @@ RSpec.describe FetchPokemonSkillsInteractor do
       end
     end
 
-    context 'with invalid params' do
+    context 'when pokemon not exists' do
       let(:name) { 'picachu' }
 
       it 'failure' do
