@@ -52,22 +52,6 @@ services:
       interval: 5s
     networks:
       - isg_test_network
-
-  localstack:
-    image: localstack/localstack:0.14.5
-    environment:
-      - SERVICES=s3
-      - AWS_ACCESS_KEY_ID=LOCAL_ACCESS_KEY_TOKEN
-      - AWS_SECRET_ACCESS_KEY=LOCAL_SECRET_ACCESS_KEY_TOKEN
-      - AWS_DEFAULT_REGION=us-east-1
-      - AWS_DEFAULT_OUTPUT=json
-      - DATA_DIR=${LOCALSTACK_DATA_DIR:-/tmp/localstack/data}
-      - PERSISTENCE=1
-    ports:
-      - "4566:4566" # s3
-    volumes:
-      - ./.localstack/data:/tmp/localstack/data
-      - ./.localstack/bootstrap:/opt/bootstrap/
 volumes:
   postgres:
   bundle:

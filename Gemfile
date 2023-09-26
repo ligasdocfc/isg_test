@@ -81,3 +81,7 @@ end
 gem "vcr", "~> 6.2"
 
 gem "webmock", "~> 3.19"
+
+gem "devise", "~> 4.9"
+
+gem "devise-jwt", "~> 0.11.0"
