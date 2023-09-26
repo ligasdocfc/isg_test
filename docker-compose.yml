@@ -29,7 +29,7 @@ x-rails-shared-config:
     - postgres
   entrypoint: ./docker/rails/entrypoint.sh
   networks:
-    - pokemon_network
+    - isg_test_network
 
 services:
   app:
@@ -51,7 +51,7 @@ services:
       test: pg_isready -U $${POSTGRES_USER} -h $${POSTGRES_HOST}
       interval: 5s
     networks:
-      - pokemon_network
+      - isg_test_network
 
   localstack:
     image: localstack/localstack:0.14.5
@@ -74,4 +74,4 @@ volumes:
   rails_cache:
   history:
 networks:
-  pokemon_network:
+  isg_test_network:

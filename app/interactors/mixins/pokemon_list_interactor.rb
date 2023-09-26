@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Mixins
-  module PokemonListInteractor
+  module IsgTestInteractor
     extend ActiveSupport::Concern
 
     class MissingAttributesError < StandardError; end
