@@ -58,4 +58,39 @@ RSpec.describe 'Api::V1::PostsController', type: :request do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe 'DELETE /api/v1/posts/:id' do
+    let(:post) { create(:post, user:) }
+
+    it 'deletes an existing post' do
+      headers_request_jwt = { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
+      headers = Devise::JWT::TestHelpers.auth_headers(headers_request_jwt, user)
+      delete("/api/v1/posts/#{post.id}", headers:)
+
+      expect(response).to have_http_status(:no_content)
+    end
+
+    it 'deletes an existing post with comment' do
+      create(:comment, post:)
+      headers_request_jwt = { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
+      headers = Devise::JWT::TestHelpers.auth_headers(headers_request_jwt, user)
+      delete("/api/v1/posts/#{post.id}", headers:)
+
+      expect(response).to have_http_status(:no_content)
+    end
+
+    it 'returns not_found status' do
+      headers_request_jwt = { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
+      headers = Devise::JWT::TestHelpers.auth_headers(headers_request_jwt, user)
+      delete("/api/v1/posts/#{Faker::Number.number(digits: 10)}", headers:)
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'returns unauthorized status' do
+      delete "/api/v1/posts/#{post.id}"
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end

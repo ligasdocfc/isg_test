@@ -32,6 +32,19 @@ module Api
         end
       end
 
+      def destroy
+        post = Posts::DestroyPostInteractor.call(
+          post: @post,
+          user: current_user
+        )
+
+        if post.success?
+          head :no_content
+        else
+          render json: errors_serializer(post.errors), status: :unprocessable_entity
+        end
+      end
+
       private
 
       def set_post
