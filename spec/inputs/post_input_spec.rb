@@ -1,8 +1,8 @@
-# spec/models/post_input_spec.rb
+# frozen_string_literal: true
 
 require 'rails_helper'
 
-RSpec.describe PostInput, type: :model do
+RSpec.describe PostInput do
   let(:valid_params) { { title: 'Test Title', text: 'Test Text' } }
   let(:invalid_params) { { title: '', text: '' } }
 

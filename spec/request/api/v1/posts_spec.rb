@@ -1,9 +1,9 @@
-# spec/requests/api/v1/posts_controller_spec.rb
+# frozen_string_literal: true
 
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::PostsController', type: :request do
-  let(:user) { create(:user) } # Certifique-se de criar um usuário de teste usando FactoryBot
+  let(:user) { create(:user) }
 
   describe 'POST /api/v1/posts' do
     it 'creates a new post' do

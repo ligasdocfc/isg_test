@@ -3,6 +3,8 @@
 module Api
   module V1
     class PostsController < UsersController
+      before_action :set_post, only: %i[update destroy]
+
       def create
         post = Posts::CreatePostInteractor.call(
           user: current_user,
@@ -18,7 +20,7 @@ module Api
 
       def update
         post = Posts::UpdatePostInteractor.call(
-          id: params[:id].to_i,
+          post: @post,
           user: current_user,
           post_params:
         )
@@ -31,6 +33,10 @@ module Api
       end
 
       private
+
+      def set_post
+        @post = Post.find(params[:id])
+      end
 
       def post_params
         params.require(:post).permit(:title, :text)

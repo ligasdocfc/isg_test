@@ -4,7 +4,7 @@ module Posts
   class UpdatePostInteractor
     include Mixins::IsgTestInteractor
 
-    attributes :user, :post_params, :id
+    attributes :user, :post_params, :post
 
     def call
       check_user
@@ -12,10 +12,6 @@ module Posts
     end
 
     private
-
-    def post
-      @post ||= Post.find(id)
-    end
 
     def check_user
       context.fail!(message: I18n.t('errors.interactors.update_post.check_user')) if user.id != post.user_id
