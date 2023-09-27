@@ -85,3 +85,11 @@ gem "webmock", "~> 3.19"
 gem "devise", "~> 4.9"
 
 gem "devise-jwt", "~> 0.11.0"
+
+gem "rack-cors", "~> 2.0"
+
+gem "blueprinter", "~> 0.30.0"
+
+gem "faker", "~> 3.2"
+
+gem "factory_bot_rails", "~> 6.2"

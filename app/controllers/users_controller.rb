@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  include ::ErrorHandler
   prepend_before_action { request.env['devise.skip_trackable'] = true }
   before_action :authenticate_user!
 
